@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: 'qBittorrent Authentication API'
   description: 'All API methods follows the format /api/v2/APIName/methodName, where APIName is a certain subgroup of API methods whose functionality is related.All API methods only allows GET or POST methods. Use POST when you are mutating some state (or when your request is too big to fit into GET) and use GET otherwise. Starting with qBittorrent v4.4.4, server will return 405 Method Not Allowed when you used the wrong request method.All API methods require authentication (except /api/v2/auth/login, obviously).'
-  version: 2.0
+  version: v2.8.3
 paths:
   /api/v2/auth/login:
     post:
@@ -122,204 +122,204 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MainLogDto'
-    /api/v2/log/peer:
-      post:
-        summary: 'Get qBittorrent peer log'
-        operationId: Peer
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  last_known_id:
-                    type: integer
-                    description: 'Exclude messages with "message id" <= last_known_id'
-                    default: -1
-        responses:
-          '200':
-            description: 'qBittorrent peer log'
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/PeerLogDto'
-    /api/v2/sync/maindata:
-      post:
-        summary: 'Get qBittorrent main data'
-        operationId: MainData
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  rid:
-                    type: integer
-                    description: 'Response ID. If not provided, rid=0 will be assumed. If the given rid is different from the one of last server reply, full_update will be true (see the server reply details for more info)'
-                    default: 0
-        responses:
-          '200':
-            description: 'qBittorrent main data'
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/MainDataDto'
-    /api/v2/sync/torrentPeers:
-      post:
-        summary: 'Get qBittorrent torrent peers'
-        operationId: TorrentPeers
-        requestBody:
-          content:
-            application/json:
+  /api/v2/log/peer:
+    post:
+      summary: 'Get qBittorrent peer log'
+      operationId: Peer
+      requestBody:
+        content:
+          application/json:
             schema:
               type: object
               properties:
-              hash:
-                type: string
-                description: 'Torrent hash'
-              rid:
-                type: integer
-                description: 'Response ID. If not provided, rid=0 will be assumed. If the given rid is different from the one of last server reply, full_update will be true (see the server reply details for more info)'
-                default: 0
-        responses:
+                last_known_id:
+                  type: integer
+                  description: 'Exclude messages with "message id" <= last_known_id'
+                  default: -1
+      responses:
+        '200':
+          description: 'qBittorrent peer log'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PeerLogDto'
+  /api/v2/sync/maindata:
+    post:
+      summary: 'Get qBittorrent main data'
+      operationId: MainData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rid:
+                  type: integer
+                  description: 'Response ID. If not provided, rid=0 will be assumed. If the given rid is different from the one of last server reply, full_update will be true (see the server reply details for more info)'
+                  default: 0
+      responses:
+        '200':
+          description: 'qBittorrent main data'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MainDataDto'
+  /api/v2/sync/torrentPeers:
+    post:
+      summary: 'Get qBittorrent torrent peers'
+      operationId: TorrentPeers
+      requestBody:
+        content:
+          application/json:
+          schema:
+            type: object
+            properties:
+            hash:
+              type: string
+              description: 'Torrent hash'
+            rid:
+              type: integer
+              description: 'Response ID. If not provided, rid=0 will be assumed. If the given rid is different from the one of last server reply, full_update will be true (see the server reply details for more info)'
+              default: 0
+      responses:
         '200':
           description: 'qBittorrent torrent peers'
         '404':
           description: 'Torrent not found'
-    /api/v2/transfer/info:
-      post:
-        summary: 'Get qBittorrent transfer info'
-        operationId: TransferInfo
-        responses:
-          '200':
-            description: 'qBittorrent transfer info'
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/TransferInfoDto'
-    /api/v2/transfer/speedLimitsMode:
-      post:
-        summary: 'Get qBittorrent transfer speed limits mode'
-        operationId: SpeedLimitsMode
-        responses:
-          '200':
-            description: 'qBittorrent transfer speed limits mode'
-            content:
-              text/plain:
-                schema:
-                  type: string
-                  enum: [ '1','0' ]
-    /api/v2/transfer/toggleSpeedLimitsMode:
-      post:
-        summary: 'Toggle qBittorrent transfer speed limits mode'
-        operationId: ToggleSpeedLimitsMode
-        responses:
-          '200':
-            description: 'qBittorrent transfer speed limits mode toggled successfully'
-    /api/v2/transfer/downloadLimit:
-      post:
-        summary: 'Get qBittorrent transfer download limit'
-        operationId: DownloadLimit
-        responses:
+  /api/v2/transfer/info:
+    post:
+      summary: 'Get qBittorrent transfer info'
+      operationId: TransferInfo
+      responses:
+        '200':
+          description: 'qBittorrent transfer info'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferInfoDto'
+  /api/v2/transfer/speedLimitsMode:
+    post:
+      summary: 'Get qBittorrent transfer speed limits mode'
+      operationId: SpeedLimitsMode
+      responses:
+        '200':
+          description: 'qBittorrent transfer speed limits mode'
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum: [ '1','0' ]
+  /api/v2/transfer/toggleSpeedLimitsMode:
+    post:
+      summary: 'Toggle qBittorrent transfer speed limits mode'
+      operationId: ToggleSpeedLimitsMode
+      responses:
+        '200':
+          description: 'qBittorrent transfer speed limits mode toggled successfully'
+  /api/v2/transfer/downloadLimit:
+    post:
+      summary: 'Get qBittorrent transfer download limit'
+      operationId: DownloadLimit
+      responses:
         '200':
           description: 'qBittorrent transfer download limit'
           content:
           text/plain:
             schema:
               type: integer
-    /api/v2/transfer/setDownloadLimit:
-      post:
-        summary: 'Set qBittorrent transfer download limit'
-        operationId: SetDownloadLimit
-        requestBody:
-          content:
-            application/json:
-            schema:
-              type: object
-              properties:
-                limit:
-                  type: integer
-                  description: 'The global download speed limit to set in bytes/second'
-        responses:
+  /api/v2/transfer/setDownloadLimit:
+    post:
+      summary: 'Set qBittorrent transfer download limit'
+      operationId: SetDownloadLimit
+      requestBody:
+        content:
+          application/json:
+          schema:
+            type: object
+            properties:
+              limit:
+                type: integer
+                description: 'The global download speed limit to set in bytes/second'
+      responses:
         '200':
           description: 'qBittorrent transfer download limit set successfully'
-    /api/v2/transfer/uploadLimit:
-      post:
-        summary: 'Get qBittorrent transfer upload limit'
-        operationId: UploadLimit
-        responses:
+  /api/v2/transfer/uploadLimit:
+    post:
+      summary: 'Get qBittorrent transfer upload limit'
+      operationId: UploadLimit
+      responses:
         '200':
           description: 'qBittorrent transfer upload limit'
           content:
           text/plain:
             schema:
               type: integer
-    /api/v2/transfer/setUploadLimit:
-      post:
-        summary: 'Set qBittorrent transfer upload limit'
-        operationId: SetUploadLimit
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  limit:
-                    type: integer
-                    description: 'The global upload speed limit to set in bytes/second'
-        responses:
-        '200':
-        description: 'qBittorrent transfer upload limit set successfully'
-    /api/v2/transfer/banPeers:
-      post:
-        summary: 'Ban peers'
-        operationId: BanPeers
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  peers:
-                    type: string
-                    description: 'The peer to ban,or multiple peers separated by a pipe |. Each peer is a colon-separated host:port'
-        responses:
-          '200':
-            description: 'Peers banned successfully'
-    /api/v2/torrents/info:
-      post:
-        summary: 'Get qBittorrent torrents info'
-        operationId: Info
-        requestBody:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TorrentsInfoReqDto'
-        responses:
-          '200':
-            description: 'qBittorrent torrents info'
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/TorrentsInfoDto'
-    /api/v2/torrents/properties:
-      post:
-        summary: 'Get qBittorrent torrent properties'
-        operationId: Properties
-        requestBody:
-          content:
-            application/json:
+  /api/v2/transfer/setUploadLimit:
+    post:
+      summary: 'Set qBittorrent transfer upload limit'
+      operationId: SetUploadLimit
+      requestBody:
+        content:
+          application/json:
             schema:
               type: object
               properties:
-                hash:
+                limit:
+                  type: integer
+                  description: 'The global upload speed limit to set in bytes/second'
+      responses:
+        '200':
+          description: 'qBittorrent transfer upload limit set successfully'
+  /api/v2/transfer/banPeers:
+    post:
+      summary: 'Ban peers'
+      operationId: BanPeers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                peers:
                   type: string
-                  description: 'The hash of the torrent you want to get the generic properties of'
-        responses:
+                  description: 'The peer to ban,or multiple peers separated by a pipe |. Each peer is a colon-separated host:port'
+      responses:
+        '200':
+          description: 'Peers banned successfully'
+  /api/v2/torrents/info:
+    post:
+      summary: 'Get qBittorrent torrents info'
+      operationId: Info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TorrentsInfoReqDto'
+      responses:
+        '200':
+          description: 'qBittorrent torrents info'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TorrentsInfoDto'
+  /api/v2/torrents/properties:
+    post:
+      summary: 'Get qBittorrent torrent properties'
+      operationId: Properties
+      requestBody:
+        content:
+          application/json:
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+                description: 'The hash of the torrent you want to get the generic properties of'
+      responses:
         '200':
           description: 'qBittorrent torrent properties'
           content:
@@ -328,837 +328,837 @@ paths:
               $ref: '#/components/schemas/TorrentPropertiesDto'
         '404':
           description: 'Torrent not found'
-    /api/v2/torrents/trackers:
-      post:
-        summary: 'Get qBittorrent torrent trackers'
-        operationId: Trackers
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent you want to get the trackers of'
-        responses:
-          '200':
-            description: 'qBittorrent torrent trackers'
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/TrackerDto'
-          '404':
-            description: 'Torrent not found'
-    /api/v2/torrents/webseeds:
-      post:
-        summary: 'Get qBittorrent torrent web seeds'
-        operationId: WebSeeds
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent you want to get the webseeds of'
-        responses:
-          '200':
-            description: 'qBittorrent torrent web seeds'
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      url:
-                        type: string
-                        description: 'The URL of the webseed'
-          '404':
-            description: 'Torrent not found'
-    /api/v2/torrents/files:
-      post:
-        summary: 'Get torrent contents'
-        operationId: Files
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent you want to get the contents of'
-                  index:
-                    type: string
-                    description: 'The indexes of the files you want to retrieve. indexes can contain multiple values separated by |.'
-                    required: false
-        responses:
-          '200':
-            description: 'Torrent contents'
-            content:
-            application/json:
-              schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/FileDto'
-          '404':
-            description: 'Torrent not found'
-    /api/v2/torrents/pieceStates:
-      post:
-        summary: 'Get torrent piece states'
-        operationId: PieceStates
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: "The hash of the torrent you want to get the pieces' states of"
-        responses:
-          '200':
-            description: 'Torrent piece states'
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    type: integer
-                    enum: [ 0,1,2 ]
-                    description: 'The state of the piece'
-          '404':
-            description: 'Torrent not found'
-    /api/v2/torrents/pieceHashes:
-      post:
-        summary: "Get torrent pieces' hashes"
-        operationId: PieceHashes
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: "The hash of the torrent you want to get the pieces' hashes of"
-        responses:
-          '200':
-            description: "Torrent pieces' hashes"
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    type: string
-                    description: "The hash of the piece"
-          '404':
-            description: 'Torrent not found'
-    /api/v2/torrents/pause:
-      post:
-        summary: 'Pause torrents'
-        operationId: Pause
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: "The hashes of the torrents you want to pause. hashes can contain multiple hashes separated by |, to pause multiple torrents, or set to all, to pause all torrents."
-        responses:
-          '200':
-            description: 'Torrents paused successfully'
-    /api/v2/torrents/resume:
-      post:
-        summary: 'Resume torrents'
-        operationId: Resume
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: "The hashes of the torrents you want to resume. hashes can contain multiple hashes separated by |, to resume multiple torrents, or set to all, to resume all torrents."
-        responses:
-          '200':
-            description: 'Torrents resumed successfully'
-    /api/v2/torrents/delete:
-      post:
-        summary: 'Delete torrents'
-        operationId: Delete
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: "The hashes of the torrents you want to delete. hashes can contain multiple hashes separated by |, to delete multiple torrents, or set to all, to delete all torrents."
-                  deletFiles:
-                    type: boolean
-                    description: 'If set to true, the downloaded data will also be deleted, otherwise has no effect.'
-        responses:
-          '200':
-            description: 'Torrents deleted successfully'
-    /api/v2/torrents/recheck:
-      post:
-        summary: 'Recheck torrents'
-        operationId: Recheck
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: "The hashes of the torrents you want to recheck. hashes can contain multiple hashes separated by |, to recheck multiple torrents, or set to all, to recheck all torrents."
-        responses:
-          '200':
-            description: 'Torrents rechecked successfully'
-    /api/v2/torrents/reannounce:
-      post:
-        summary: 'Reannounce torrents'
-        operationId: Recheck
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: "The hashes of the torrents you want to reannounce. hashes can contain multiple hashes separated by |, to reannounce multiple torrents, or set to all, to reannounce all torrents."
-        responses:
-          '200':
-            description: 'Torrents reannounced successfully'
-    /api/v2/torrents/add:
-      post:
-        summary: 'Add new torrent'
-        operationId: Add
-        requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/AddTorrentDto'
-        responses:
-          '200':
-            description: 'Torrent added successfully'
-          '415':
-            description: 'Torrent file is not valid'
-    /api/v2/torrents/addTrackers:
-      post:
-        summary: 'Add trackers to torrent'
-        operationId: AddTrackers
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent'
-                  urls:
-                    type: string
-                    description: 'The URLs of the trackers you want to add.'
-        responses:
-          '200':
-            description: 'Trackers added successfully'
-          '404':
-            description: 'Torrent hash was not found'
-    /api/v2/torrents/editTracker:
-      post:
-        summary: 'Edit tracker of torrent'
-        operationId: EditTracker
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent'
-                  origUrl:
-                    type: string
-                    description: 'The tracker URL you want to edit'
-                  newUrl:
-                    type: string
-                    description: 'The new URL to replace the origUrl'
-        responses:
-          '200':
-            description: 'Tracker edited successfully'
-          '400':
-            description: 'newUrl is not a valid URL'
-          '404':
-            description: 'Torrent hash was not found'
-          '409':
-            description: 'newUrl already exists for the torrent or origUrl was not found'
-    /api/v2/torrents/removeTrackers:
-      post:
-        summary: 'Remove trackers'
-        operationId: RemoveTrackers
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent'
-                  urls:
-                    type: string
-                    description: 'URLs to remove, separated by |'
-        responses:
-          '200':
-            description: 'Trackers deleted successfully'
-          '404':
-            description: 'Torrent hash was not found'
-          '409':
-            description: 'All urls were not found'
-    /api/v2/torrents/addPeers:
-      post:
-        summary: 'Add peers to torrent'
-        operationId: AddPeers
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'The hash of the torrent, or multiple hashes separated by a pipe |'
-                  peers:
-                    type: string
-                    description: 'The peer to add, or multiple peers separated by a pipe |. Each peer is a colon-separated'
-    /api/v2/torrents/increasePrio:
-      post:
-        summary: 'Increase torrent priority'
-        operationId: IncreasePrio
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'The hashes of the torrents you want to increase the priority of. hashes can contain multiple hashes separated by |, to increase the priority of multiple torrents, or set to all, to increase the priority of all torrents.'
-        responses:
-          '200':
-            description: 'Torrents priority increased successfully'
-          '409':
-            description: 'Torrent queueing is not enabled'
-    /api/v2/torrents/topPrio:
-      post:
-        summary: 'Set torrent priority to top'
-        operationId: TopPrio
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'The hashes of the torrents you want to set to the maximum priority. hashes can contain multiple hashes separated by |, to set multiple torrents to the maximum priority, or set to all, to set all torrents to the maximum priority.'
-        responses:
-          '200':
-            description: 'Torrents priority set to top successfully'
-          '409':
-            description: 'Torrent queueing is not enabled'
-    /api/v2/torrents/bottomPrio:
-      post:
-        summary: 'Set torrent priority to bottom'
-        operationId: BottomPrio
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'The hashes of the torrents you want to set to the minimum priority. hashes can contain multiple hashes separated by |, to set multiple torrents to the minimum priority, or set to all, to set all torrents to the minimum priority.'
-        responses:
-          '200':
-            description: 'Torrents priority set to bottom successfully'
-          '409':
-            description: 'Torrent queueing is not enabled'
-    /api/v2/torrents/filePrio:
-      post:
-        summary: 'Set file priority'
-        operationId: FilePrio
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'The hash of the torrent'
-                  id:
-                    type: string
-                    description: 'File ids, separated by |'
-                  priority:
-                    type: string
-                    description: 'File priority to set (consult torrent contents API for possible values)'
-        responses:
-          '200':
-            description: 'File priority set successfully'
-          '400':
-            description: 'Priority is invalid or At least one file id is not a valid integer'
-          '404':
-            description: 'Torrent hash was not found'
-          '409':
-            description: "Torrent metadata hasn't downloaded yet or At least one file id was not found"
-    /api/v2/torrents/downloadLimit:
-      post:
-        summary: 'Set torrent download limit'
-        operationId: TorrentsDownloadLimit
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'can contain multiple hashes separated by | or set to all'
-        responses:
-          '200':
-            description: 'Torrent download limit set successfully'
-            content:
-              application/json:
-                schema:
-                  type: object
-                  additionalProperties:
-                    type: integer
-                    description: 'download speed limit in bytes per second; this value will be zero if no limit is applied'
-    /api/v2/torrents/setDownloadLimit:
-      post:
-        summary: 'Set torrent download limit'
-        operationId: SetTorrentsDownloadLimit
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'The hashes of the torrents you want to set the download limit of. hashes can contain multiple hashes separated by |, to set the download limit of multiple torrents, or set to all, to set the download limit of all torrents.'
-                  limit:
-                    type: string
-                    description: 'the download speed limit in bytes per second you want to set.'
-        responses:
-          '200':
-            description: 'Torrent download limit set successfully'
-    /api/v2/torrents/setShareLimits:
-      post:
-        summary: 'Set torrent share limits'
-        operationId: SetShareLimits
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  ratioLimit:
-                    type: string
-                  seedingTimeLimit:
-                    type: string
-        responses:
-          '200':
-            description: 'Torrent share limits set successfully'
-    /api/v2/torrents/uploadLimit:
-      post:
-        summary: 'Set torrent upload limit'
-        operationId: TorrentsUploadLimit
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                    description: 'can contain multiple hashes separated by | or set to all'
-        responses:
-          '200':
-            description: 'Torrent upload limit set successfully'
-            content:
-              application/json:
-                schema:
-                  type: object
-                  additionalProperties:
-                    type: integer
-                    description: 'upload speed limit in bytes per second; this value will be zero if no limit is applied'
-    /api/v2/torrents/setLocation:
-      post:
-        summary: 'Set torrent location'
-        operationId: SetLocation
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  location:
-                    type: string
-                    description: "the location to download the torrent to. If the location doesn't exist, the torrent's location is unchanged."
-        responses:
-          '200':
-            description: 'Torrent location set successfully'
-          '400':
-            description: 'Save path is empty'
-          '403':
-            description: 'Save path is not writable'
-          '409':
-            description: 'Unable to create save path directory'
-    /api/v2/torrents/rename:
-      post:
-        summary: 'Set torrent name'
-        operationId: Rename
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  name:
-                    type: string
-        responses:
-          '200':
-            description: 'Torrent renamed successfully'
-          '404':
-            description: 'Torrent hash is invalid'
-          '409':
-            description: 'Torrent name is empty'
-    /api/v2/torrents/setCategory:
-      post:
-        summary: 'Set torrent category'
-        operationId: SetCategory
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  category:
-                    type: string
-        responses:
-          '200':
-            description: 'Torrent category set successfully'
-          '409':
-            description: 'Category name does not exist'
-    /api/v2/torrents/categories:
-      post:
-        summary: 'Get all categories'
-        operationId: Categories
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  type: object
-                  additionalProperties:
-                    type: object
-            description: 'Torrent category added successfully'
-    /api/v2/torrents/createCategory:
-      post:
-        summary: 'Add new category'
-        operationId: CreateCategory
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  category:
-                    type: string
-                  savePath:
-                    type: string
-        responses:
-          '200':
-            description: 'Torrent category added successfully'
-          '400':
-            description: 'Category name is empty'
-          '409':
-            description: 'Category name is invalid'
-    /api/v2/torrents/editCategory:
-      post:
-        summary: 'Edit category'
-        operationId: EditCategory
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  category:
-                    type: string
-                  savePath:
-                    type: string
-        responses:
-          '200':
-            description: 'Torrent category edited successfully'
-          '400':
-            description: 'Category name is empty'
-          '409':
-            description: 'Category name is invalid'
-    /api/v2/torrents/removeCategories:
-      post:
-        summary: 'Remove categories'
-        operationId: RemoveCategories
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  categories:
-                    type: string
-                    description: 'can contain multiple cateogies separated by \n'
-        responses:
-          '200':
-            description: 'Torrent categories removed successfully'
-    /api/v2/torrents/addTags:
-      post:
-        summary: 'Add tags to torrent'
-        operationId: AddTags
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  tags:
-                    type: string
-        responses:
-          '200':
-            description: 'Tags added successfully'
-    /api/v2/torrents/removeTags:
-      post:
-        summary: 'Remove tags from torrent'
-        operationId: RemoveTags
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  tags:
-                    type: string
-        responses:
-          '200':
-            description: 'Tags removed successfully'
-    /api/v2/torrents/tags:
-      post:
-        summary: 'Get all tags'
-        operationId: Tags
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
+  /api/v2/torrents/trackers:
+    post:
+      summary: 'Get qBittorrent torrent trackers'
+      operationId: Trackers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
                   type: string
-    /api/v2/torrents/createTags:
-      post:
-        summary: 'Create tags'
-        operationId: CreateTags
-        requestBody:
+                  description: 'The hash of the torrent you want to get the trackers of'
+      responses:
+        '200':
+          description: 'qBittorrent torrent trackers'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrackerDto'
+        '404':
+          description: 'Torrent not found'
+  /api/v2/torrents/webseeds:
+    post:
+      summary: 'Get qBittorrent torrent web seeds'
+      operationId: WebSeeds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent you want to get the webseeds of'
+      responses:
+        '200':
+          description: 'qBittorrent torrent web seeds'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                      description: 'The URL of the webseed'
+        '404':
+          description: 'Torrent not found'
+  /api/v2/torrents/files:
+    post:
+      summary: 'Get torrent contents'
+      operationId: Files
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent you want to get the contents of'
+                index:
+                  type: string
+                  description: 'The indexes of the files you want to retrieve. indexes can contain multiple values separated by |.'
+                  required: false
+      responses:
+        '200':
+          description: 'Torrent contents'
+          content:
+          application/json:
+            schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/FileDto'
+        '404':
+          description: 'Torrent not found'
+  /api/v2/torrents/pieceStates:
+    post:
+      summary: 'Get torrent piece states'
+      operationId: PieceStates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: "The hash of the torrent you want to get the pieces' states of"
+      responses:
+        '200':
+          description: 'Torrent piece states'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  enum: [ 0,1,2 ]
+                  description: 'The state of the piece'
+        '404':
+          description: 'Torrent not found'
+  /api/v2/torrents/pieceHashes:
+    post:
+      summary: "Get torrent pieces' hashes"
+      operationId: PieceHashes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: "The hash of the torrent you want to get the pieces' hashes of"
+      responses:
+        '200':
+          description: "Torrent pieces' hashes"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  description: "The hash of the piece"
+        '404':
+          description: 'Torrent not found'
+  /api/v2/torrents/pause:
+    post:
+      summary: 'Pause torrents'
+      operationId: Pause
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: "The hashes of the torrents you want to pause. hashes can contain multiple hashes separated by |, to pause multiple torrents, or set to all, to pause all torrents."
+      responses:
+        '200':
+          description: 'Torrents paused successfully'
+  /api/v2/torrents/resume:
+    post:
+      summary: 'Resume torrents'
+      operationId: Resume
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: "The hashes of the torrents you want to resume. hashes can contain multiple hashes separated by |, to resume multiple torrents, or set to all, to resume all torrents."
+      responses:
+        '200':
+          description: 'Torrents resumed successfully'
+  /api/v2/torrents/delete:
+    post:
+      summary: 'Delete torrents'
+      operationId: Delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: "The hashes of the torrents you want to delete. hashes can contain multiple hashes separated by |, to delete multiple torrents, or set to all, to delete all torrents."
+                deletFiles:
+                  type: boolean
+                  description: 'If set to true, the downloaded data will also be deleted, otherwise has no effect.'
+      responses:
+        '200':
+          description: 'Torrents deleted successfully'
+  /api/v2/torrents/recheck:
+    post:
+      summary: 'Recheck torrents'
+      operationId: Recheck
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: "The hashes of the torrents you want to recheck. hashes can contain multiple hashes separated by |, to recheck multiple torrents, or set to all, to recheck all torrents."
+      responses:
+        '200':
+          description: 'Torrents rechecked successfully'
+  /api/v2/torrents/reannounce:
+    post:
+      summary: 'Reannounce torrents'
+      operationId: Recheck
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: "The hashes of the torrents you want to reannounce. hashes can contain multiple hashes separated by |, to reannounce multiple torrents, or set to all, to reannounce all torrents."
+      responses:
+        '200':
+          description: 'Torrents reannounced successfully'
+  /api/v2/torrents/add:
+    post:
+      summary: 'Add new torrent'
+      operationId: Add
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddTorrentDto'
+      responses:
+        '200':
+          description: 'Torrent added successfully'
+        '415':
+          description: 'Torrent file is not valid'
+  /api/v2/torrents/addTrackers:
+    post:
+      summary: 'Add trackers to torrent'
+      operationId: AddTrackers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent'
+                urls:
+                  type: string
+                  description: 'The URLs of the trackers you want to add.'
+      responses:
+        '200':
+          description: 'Trackers added successfully'
+        '404':
+          description: 'Torrent hash was not found'
+  /api/v2/torrents/editTracker:
+    post:
+      summary: 'Edit tracker of torrent'
+      operationId: EditTracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent'
+                origUrl:
+                  type: string
+                  description: 'The tracker URL you want to edit'
+                newUrl:
+                  type: string
+                  description: 'The new URL to replace the origUrl'
+      responses:
+        '200':
+          description: 'Tracker edited successfully'
+        '400':
+          description: 'newUrl is not a valid URL'
+        '404':
+          description: 'Torrent hash was not found'
+        '409':
+          description: 'newUrl already exists for the torrent or origUrl was not found'
+  /api/v2/torrents/removeTrackers:
+    post:
+      summary: 'Remove trackers'
+      operationId: RemoveTrackers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent'
+                urls:
+                  type: string
+                  description: 'URLs to remove, separated by |'
+      responses:
+        '200':
+          description: 'Trackers deleted successfully'
+        '404':
+          description: 'Torrent hash was not found'
+        '409':
+          description: 'All urls were not found'
+  /api/v2/torrents/addPeers:
+    post:
+      summary: 'Add peers to torrent'
+      operationId: AddPeers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'The hash of the torrent, or multiple hashes separated by a pipe |'
+                peers:
+                  type: string
+                  description: 'The peer to add, or multiple peers separated by a pipe |. Each peer is a colon-separated'
+  /api/v2/torrents/increasePrio:
+    post:
+      summary: 'Increase torrent priority'
+      operationId: IncreasePrio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'The hashes of the torrents you want to increase the priority of. hashes can contain multiple hashes separated by |, to increase the priority of multiple torrents, or set to all, to increase the priority of all torrents.'
+      responses:
+        '200':
+          description: 'Torrents priority increased successfully'
+        '409':
+          description: 'Torrent queueing is not enabled'
+  /api/v2/torrents/topPrio:
+    post:
+      summary: 'Set torrent priority to top'
+      operationId: TopPrio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'The hashes of the torrents you want to set to the maximum priority. hashes can contain multiple hashes separated by |, to set multiple torrents to the maximum priority, or set to all, to set all torrents to the maximum priority.'
+      responses:
+        '200':
+          description: 'Torrents priority set to top successfully'
+        '409':
+          description: 'Torrent queueing is not enabled'
+  /api/v2/torrents/bottomPrio:
+    post:
+      summary: 'Set torrent priority to bottom'
+      operationId: BottomPrio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'The hashes of the torrents you want to set to the minimum priority. hashes can contain multiple hashes separated by |, to set multiple torrents to the minimum priority, or set to all, to set all torrents to the minimum priority.'
+      responses:
+        '200':
+          description: 'Torrents priority set to bottom successfully'
+        '409':
+          description: 'Torrent queueing is not enabled'
+  /api/v2/torrents/filePrio:
+    post:
+      summary: 'Set file priority'
+      operationId: FilePrio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'The hash of the torrent'
+                id:
+                  type: string
+                  description: 'File ids, separated by |'
+                priority:
+                  type: string
+                  description: 'File priority to set (consult torrent contents API for possible values)'
+      responses:
+        '200':
+          description: 'File priority set successfully'
+        '400':
+          description: 'Priority is invalid or At least one file id is not a valid integer'
+        '404':
+          description: 'Torrent hash was not found'
+        '409':
+          description: "Torrent metadata hasn't downloaded yet or At least one file id was not found"
+  /api/v2/torrents/downloadLimit:
+    post:
+      summary: 'Set torrent download limit'
+      operationId: TorrentsDownloadLimit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'can contain multiple hashes separated by | or set to all'
+      responses:
+        '200':
+          description: 'Torrent download limit set successfully'
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  tags:
-                    type: string
-                    description: "a list of tags you want to create. Can contain multiple tags separated by ','"
-        responses:
-          '200':
-            description: 'Tags created successfully'
-    /api/v2/torrents/setAutoManagement:
-      post:
-        summary: 'Set auto management'
-        operationId: SetAutoManagement
-        requestBody:
+                additionalProperties:
+                  type: integer
+                  description: 'download speed limit in bytes per second; this value will be zero if no limit is applied'
+  /api/v2/torrents/setDownloadLimit:
+    post:
+      summary: 'Set torrent download limit'
+      operationId: SetTorrentsDownloadLimit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'The hashes of the torrents you want to set the download limit of. hashes can contain multiple hashes separated by |, to set the download limit of multiple torrents, or set to all, to set the download limit of all torrents.'
+                limit:
+                  type: string
+                  description: 'the download speed limit in bytes per second you want to set.'
+      responses:
+        '200':
+          description: 'Torrent download limit set successfully'
+  /api/v2/torrents/setShareLimits:
+    post:
+      summary: 'Set torrent share limits'
+      operationId: SetShareLimits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                ratioLimit:
+                  type: string
+                seedingTimeLimit:
+                  type: string
+      responses:
+        '200':
+          description: 'Torrent share limits set successfully'
+  /api/v2/torrents/uploadLimit:
+    post:
+      summary: 'Set torrent upload limit'
+      operationId: TorrentsUploadLimit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                  description: 'can contain multiple hashes separated by | or set to all'
+      responses:
+        '200':
+          description: 'Torrent upload limit set successfully'
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  hashes:
-                    type: string
-                  enable:
-                    type: boolean
-        responses:
-          '200':
-            description: 'Auto management set successfully'
-    /api/v2/torrents/toggleSequentialDownload:
-      post:
-        summary: 'Toggle sequential download'
-        operationId: ToggleSequentialDownload
-        requestBody:
+                additionalProperties:
+                  type: integer
+                  description: 'upload speed limit in bytes per second; this value will be zero if no limit is applied'
+  /api/v2/torrents/setLocation:
+    post:
+      summary: 'Set torrent location'
+      operationId: SetLocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                location:
+                  type: string
+                  description: "the location to download the torrent to. If the location doesn't exist, the torrent's location is unchanged."
+      responses:
+        '200':
+          description: 'Torrent location set successfully'
+        '400':
+          description: 'Save path is empty'
+        '403':
+          description: 'Save path is not writable'
+        '409':
+          description: 'Unable to create save path directory'
+  /api/v2/torrents/rename:
+    post:
+      summary: 'Set torrent name'
+      operationId: Rename
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                name:
+                  type: string
+      responses:
+        '200':
+          description: 'Torrent renamed successfully'
+        '404':
+          description: 'Torrent hash is invalid'
+        '409':
+          description: 'Torrent name is empty'
+  /api/v2/torrents/setCategory:
+    post:
+      summary: 'Set torrent category'
+      operationId: SetCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                category:
+                  type: string
+      responses:
+        '200':
+          description: 'Torrent category set successfully'
+        '409':
+          description: 'Category name does not exist'
+  /api/v2/torrents/categories:
+    post:
+      summary: 'Get all categories'
+      operationId: Categories
+      responses:
+        '200':
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  hashes:
-                    type: string
-        responses:
-          '200':
-            description: 'Sequential download toggled successfully'
-    /api/v2/torrents/toggleFirstLastPiecePrio:
-      post:
-        summary: 'Toggle first last piece priority'
-        operationId: ToggleFirstLastPiecePrio
-        requestBody:
+                additionalProperties:
+                  type: object
+          description: 'Torrent category added successfully'
+  /api/v2/torrents/createCategory:
+    post:
+      summary: 'Add new category'
+      operationId: CreateCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                savePath:
+                  type: string
+      responses:
+        '200':
+          description: 'Torrent category added successfully'
+        '400':
+          description: 'Category name is empty'
+        '409':
+          description: 'Category name is invalid'
+  /api/v2/torrents/editCategory:
+    post:
+      summary: 'Edit category'
+      operationId: EditCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                savePath:
+                  type: string
+      responses:
+        '200':
+          description: 'Torrent category edited successfully'
+        '400':
+          description: 'Category name is empty'
+        '409':
+          description: 'Category name is invalid'
+  /api/v2/torrents/removeCategories:
+    post:
+      summary: 'Remove categories'
+      operationId: RemoveCategories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categories:
+                  type: string
+                  description: 'can contain multiple cateogies separated by \n'
+      responses:
+        '200':
+          description: 'Torrent categories removed successfully'
+  /api/v2/torrents/addTags:
+    post:
+      summary: 'Add tags to torrent'
+      operationId: AddTags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                tags:
+                  type: string
+      responses:
+        '200':
+          description: 'Tags added successfully'
+  /api/v2/torrents/removeTags:
+    post:
+      summary: 'Remove tags from torrent'
+      operationId: RemoveTags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                tags:
+                  type: string
+      responses:
+        '200':
+          description: 'Tags removed successfully'
+  /api/v2/torrents/tags:
+    post:
+      summary: 'Get all tags'
+      operationId: Tags
+      responses:
+        '200':
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-        responses:
-          '200':
-            description: 'First last piece priority toggled successfully'
-    /api/v2/torrents/setForceStart:
-      post:
-        summary: 'Set force start'
-        operationId: SetForceStart
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  value:
-                    type: boolean
-    /api/v2/torrents/setSuperSeeding:
-      post:
-        summary: 'Set super seeding'
-        operationId: SetSuperSeeding
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hashes:
-                    type: string
-                  value:
-                    type: boolean
-        responses:
-          '200':
-            description: 'Super seeding set successfully'
-    /api/v2/torrents/renameFile:
-      post:
-        summary: 'Rename file'
-        operationId: RenameFile
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent'
-                  oldPath:
-                    type: string
-                    description: 'The old name of the file'
-                  newPath:
-                    type: string
-                    description: 'The new name of the file'
-            responses:
-              '200':
-                description: 'File renamed successfully'
-              '400':
-                description: 'Missing newPath parameter'
-              '409':
-                description: 'Invalid newPath or oldPath, or newPath already in use'
-    /api/v2/torrents/renameFolder:
-      post:
-        summary: 'Rename folder'
-        operationId: RenameFolder
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hash:
-                    type: string
-                    description: 'The hash of the torrent'
-                  oldPath:
-                    type: string
-                    description: 'The old path of the torrent'
-                  newPath:
-                    type: string
-                    description: 'The new path to use for the file'
-        responses:
-          '200':
-            description: 'Folder renamed successfully'
-          '400':
-            description: 'Missing newPath parameter'
-          '409':
-            description: 'Invalid newPath or oldPath, or newPath already in use'
-    /api/v2/rss/addFolder:
-      post:
-        summary: 'Add RSS folder'
-        operationId: AddRssFolder
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  path:
-                    type: string
-                    description: 'Current full path of added folder (e.g. "The Pirate Bay\Top100")'
-        responses:
-          '200':
-            description: 'Folder added successfully'
-          '409':
-            description: 'Failure to add folder'
-    /api/v2/rss/addFeed:
-      post:
-        summary: 'Add RSS feed'
-        operationId: AddRssFeed
-        requestBody:
+                type: string
+  /api/v2/torrents/createTags:
+    post:
+      summary: 'Create tags'
+      operationId: CreateTags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: string
+                  description: "a list of tags you want to create. Can contain multiple tags separated by ','"
+      responses:
+        '200':
+          description: 'Tags created successfully'
+  /api/v2/torrents/setAutoManagement:
+    post:
+      summary: 'Set auto management'
+      operationId: SetAutoManagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                enable:
+                  type: boolean
+      responses:
+        '200':
+          description: 'Auto management set successfully'
+  /api/v2/torrents/toggleSequentialDownload:
+    post:
+      summary: 'Toggle sequential download'
+      operationId: ToggleSequentialDownload
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+      responses:
+        '200':
+          description: 'Sequential download toggled successfully'
+  /api/v2/torrents/toggleFirstLastPiecePrio:
+    post:
+      summary: 'Toggle first last piece priority'
+      operationId: ToggleFirstLastPiecePrio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+      responses:
+        '200':
+          description: 'First last piece priority toggled successfully'
+  /api/v2/torrents/setForceStart:
+    post:
+      summary: 'Set force start'
+      operationId: SetForceStart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                value:
+                  type: boolean
+  /api/v2/torrents/setSuperSeeding:
+    post:
+      summary: 'Set super seeding'
+      operationId: SetSuperSeeding
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: string
+                value:
+                  type: boolean
+      responses:
+        '200':
+          description: 'Super seeding set successfully'
+  /api/v2/torrents/renameFile:
+    post:
+      summary: 'Rename file'
+      operationId: RenameFile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent'
+                oldPath:
+                  type: string
+                  description: 'The old name of the file'
+                newPath:
+                  type: string
+                  description: 'The new name of the file'
+          responses:
+            '200':
+              description: 'File renamed successfully'
+            '400':
+              description: 'Missing newPath parameter'
+            '409':
+              description: 'Invalid newPath or oldPath, or newPath already in use'
+  /api/v2/torrents/renameFolder:
+    post:
+      summary: 'Rename folder'
+      operationId: RenameFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent'
+                oldPath:
+                  type: string
+                  description: 'The old path of the torrent'
+                newPath:
+                  type: string
+                  description: 'The new path to use for the file'
+      responses:
+        '200':
+          description: 'Folder renamed successfully'
+        '400':
+          description: 'Missing newPath parameter'
+        '409':
+          description: 'Invalid newPath or oldPath, or newPath already in use'
+  /api/v2/rss/addFolder:
+    post:
+      summary: 'Add RSS folder'
+      operationId: AddRssFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                  description: 'Current full path of added folder (e.g. "The Pirate Bay\Top100")'
+      responses:
+        '200':
+          description: 'Folder added successfully'
+        '409':
+          description: 'Failure to add folder'
+  /api/v2/rss/addFeed:
+    post:
+      summary: 'Add RSS feed'
+      operationId: AddRssFeed
+      requestBody:
         content:
           application/json:
           schema:
@@ -1170,114 +1170,114 @@ paths:
             path:
               type: string
               description: 'Current full path of added feed (e.g. "The Pirate Bay\Top100")'
-        responses:
+      responses:
         '200':
           description: 'Feed added successfully'
         '409':
           description: 'Failure to add feed'
-    /api/v2/rss/removeItem:
-      post:
-        summary: 'Remove RSS item'
-        operationId: RemoveRssItem
-        requestBody:
+  /api/v2/rss/removeItem:
+    post:
+      summary: 'Remove RSS item'
+      operationId: RemoveRssItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                  description: 'Current full path of removed item (e.g. "The Pirate Bay\Top100")'
+      responses:
+        '200':
+          description: 'Item removed successfully'
+        '409':
+          description: 'Failure to remove item'
+  /api/v2/rss/moveItem:
+    post:
+      summary: 'Move RSS item'
+      operationId: MoveRssItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                itemPath:
+                  type: string
+                  description: 'Current full path of item (e.g. "The Pirate Bay\Top100")'
+                destPath:
+                  type: string
+                  description: 'New full path of item (e.g. "The Pirate Bay")'
+      responses:
+        '200':
+          description: 'Item moved successfully'
+        '409':
+          description: 'Failure to move item'
+  /api/v2/rss/items:
+    post:
+      summary: 'Get all items'
+      operationId: Items
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                withData:
+                  type: boolean
+                  description: 'True if you want to get the data of the items'
+      responses:
+        '200':
+          description: 'Items returned successfully'
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  path:
-                    type: string
-                    description: 'Current full path of removed item (e.g. "The Pirate Bay\Top100")'
-        responses:
-          '200':
-            description: 'Item removed successfully'
-          '409':
-            description: 'Failure to remove item'
-    /api/v2/rss/moveItem:
-      post:
-        summary: 'Move RSS item'
-        operationId: MoveRssItem
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  itemPath:
-                    type: string
-                    description: 'Current full path of item (e.g. "The Pirate Bay\Top100")'
-                  destPath:
-                    type: string
-                    description: 'New full path of item (e.g. "The Pirate Bay")'
-        responses:
-          '200':
-            description: 'Item moved successfully'
-          '409':
-            description: 'Failure to move item'
-    /api/v2/rss/items:
-      post:
-        summary: 'Get all items'
-        operationId: Items
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  withData:
-                    type: boolean
-                    description: 'True if you want to get the data of the items'
-        responses:
-          '200':
-            description: 'Items returned successfully'
-            content:
-              application/json:
-                schema:
-                  type: object
-    /api/v2/rss/markAsRead:
-      post:
-        summary: 'Mark item as read'
-        operationId: MarkAsRead
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  itemPath:
-                    type: string
-                    description: 'Current full path of item (e.g. "The Pirate Bay\Top100")'
-                  articleId:
-                    type: string
-                    description: 'ID of article'
-        responses:
-          '200':
-            description: 'Item marked as read successfully'
-          '409':
-            description: 'Failure to mark item as read'
-    /api/v2/rss/refreshItem:
-      post:
-        summary: 'Refresh item'
-        operationId: RefreshItem
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  itemPath:
-                    type: string
-                    description: 'Current full path of item (e.g. "The Pirate Bay\Top100")'
-        responses:
-          '200':
-            description: 'Item refreshed successfully'
-          '409':
-            description: 'Failure to refresh item'
-    /api/v2/rss/setRule:
-      post:
-        summary: 'Set auto-downloading rule'
-        operationId: SetRssRule
-        requestBody:
+  /api/v2/rss/markAsRead:
+    post:
+      summary: 'Mark item as read'
+      operationId: MarkAsRead
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                itemPath:
+                  type: string
+                  description: 'Current full path of item (e.g. "The Pirate Bay\Top100")'
+                articleId:
+                  type: string
+                  description: 'ID of article'
+      responses:
+        '200':
+          description: 'Item marked as read successfully'
+        '409':
+          description: 'Failure to mark item as read'
+  /api/v2/rss/refreshItem:
+    post:
+      summary: 'Refresh item'
+      operationId: RefreshItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                itemPath:
+                  type: string
+                  description: 'Current full path of item (e.g. "The Pirate Bay\Top100")'
+      responses:
+        '200':
+          description: 'Item refreshed successfully'
+        '409':
+          description: 'Failure to refresh item'
+  /api/v2/rss/setRule:
+    post:
+      summary: 'Set auto-downloading rule'
+      operationId: SetRssRule
+      requestBody:
         content:
           application/json:
           schema:
@@ -1293,116 +1293,99 @@ paths:
                 application/json:
                   schema:
                     $ref: '#/components/schemas/RssRuleDto'
-
-
-        responses:
+      responses:
         '200':
           description: 'Rule set successfully'
         '409':
           description: 'Failure to set rule'
-    /api/v2/rss/renameRule:
-      post:
-        summary: 'Rename auto-downloading rule'
-        operationId: RenameRssRule
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  ruleName:
-                    type: string
-                    description: 'Rule name (e.g. "Punisher")'
-                  newRulesName:
-                    type: string
-                    description: 'New rule name (e.g. "Punisher")'
-        responses:
-        '200':
-          description: 'Rule renamed successfully'
-    /api/v2/rss/removeRule:
-      post:
-        summary: 'Remove auto-downloading rule'
-        operationId: RemoveRssRule
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
+  /api/v2/rss/renameRule:
+    post:
+      summary: 'Rename auto-downloading rule'
+      operationId: RenameRssRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
                 ruleName:
                   type: string
                   description: 'Rule name (e.g. "Punisher")'
-        responses:
+                newRulesName:
+                  type: string
+                  description: 'New rule name (e.g. "Punisher")'
+      responses:
+        '200':
+          description: 'Rule renamed successfully'
+  /api/v2/rss/removeRule:
+    post:
+      summary: 'Remove auto-downloading rule'
+      operationId: RemoveRssRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+              ruleName:
+                type: string
+                description: 'Rule name (e.g. "Punisher")'
+      responses:
         '200':
           description: 'Rule removed successfully'
-    /api/v2/rss/rules:
-      post:
-        summary: 'Get all auto-downloading rules'
-        operationId: Rules
-        responses:
-          '200':
-            description: 'Rules returned successfully'
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/RssRuleDto'
-    /api/v2/rss/matchingArticles:
-      post:
-        summary: 'Get all matching articles'
-        operationId: MatchingArticles
-        requestBody:
+  /api/v2/rss/rules:
+    post:
+      summary: 'Get all auto-downloading rules'
+      operationId: Rules
+      responses:
+        '200':
+          description: 'Rules returned successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RssRuleDto'
+  /api/v2/rss/matchingArticles:
+    post:
+      summary: 'Get all matching articles'
+      operationId: MatchingArticles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ruleName:
+                  type: string
+                  description: 'Rule name (e.g. "Punisher")'
+      responses:
+        '200':
+          description: 'Matching articles returned successfully'
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  ruleName:
-                    type: string
-                    description: 'Rule name (e.g. "Punisher")'
-        responses:
-          '200':
-            description: 'Matching articles returned successfully'
-            content:
-              application/json:
-                schema:
-                  type: object
-    /api/v2/search/start:
-      post:
-        summary: 'Start search'
-        operationId: Start
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  pattern:
-                    type: string
-                    description: 'Search pattern (e.g. "Ubuntu")'
-                  category:
-                    type: string
-                    description: 'Search category (e.g. "all")'
-                  plugins:
-                    type: string
-                    description: 'Search plugins (e.g. "all")'
-        responses:
-          '200':
-            description: 'Search started successfully'
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    id:
-                    type: number
-                    description: 'Search ID'
-          '409':
-            description: 'User has reached the limit of max Running searches (currently set to 5)'
-    /api/v2/search/stop:
-      post:
-        summary: 'Stop search'
-        operationId: Stop
-        requestBody:
+  /api/v2/search/start:
+    post:
+      summary: 'Start search'
+      operationId: Start
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pattern:
+                  type: string
+                  description: 'Search pattern (e.g. "Ubuntu")'
+                category:
+                  type: string
+                  description: 'Search category (e.g. "all")'
+                plugins:
+                  type: string
+                  description: 'Search plugins (e.g. "all")'
+      responses:
+        '200':
+          description: 'Search started successfully'
           content:
             application/json:
               schema:
@@ -1411,214 +1394,229 @@ paths:
                   id:
                   type: number
                   description: 'Search ID'
-        responses:
-          '200':
-            description: 'Search stopped successfully'
-          '404':
-            description: 'Search job was not found'
-    /api/v2/search/status:
-      post:
-        summary: 'Get search status'
-        operationId: Status
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    description: 'Search ID'
-        responses:
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                      description: 'ID of the search job'
-                    status:
-                      type: string
-                      description: '	Current status of the search job (either Running or Stopped)'
-                    total:
-                      type: number
-                      description: 'otal number of results. If the status is Running this number may contineu to increase'
-    /api/v2/search/results:
-      post:
-        summary: 'Get search results'
-        operationId: Results
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    description: 'Search ID'
-                  limit:
-                    type: number
-                    description: 'Maximum number of results to return'
-                  offset:
-                    type: number
-                    description: 'Offset of the first result to return'
-        responses:
-          '200':
-            description: 'Search results returned successfully'
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    results:
-                      type: array
-                      items:
-                        application/json:
-                          schema:
-                            type: object
-                            properties:
-                              descrLink:
-                                type: string
-                                description: "URL of the torrent's description page."
-                              fileName:
-                                type: string
-                                description: 'Name of the file.'
-                              fileSize:
-                                type: number
-                                description: 'Size of the file in bytes.'
-                              fileUrl:
-                                type: string
-                                description: 'Torrent download link, usually either .torrent file or magnet link.'
-                              nbLeechers:
-                                type: number
-                                description: 'Number of leechers.'
-                              nbSeeders:
-                                type: number
-                                description: 'Number of seeders.'
-                              siteUrl:
-                                type: string
-                                description: 'URL of the torrent site.'
-                    status:
-                      type: string
-                      description: 'Current status of the search job (either Running or Stopped)'
-                    total:
-                      type: number
-                      description: 'Total number of results. If the status is Running this number may contineu to increase'
-            '404':
-              description: 'Search job was not found'
-            '409':
-              description: '	Offset is too large, or too small (e.g. absolute value of negative number is greater than # results)'
-    /api/v2/search/delete:
-      post:
-        summary: 'Delete search'
-        operationId: SearchDelete
-        requestBody:
-          content:
-            application/json:
+        '409':
+          description: 'User has reached the limit of max Running searches (currently set to 5)'
+  /api/v2/search/stop:
+    post:
+      summary: 'Stop search'
+      operationId: Stop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                type: number
+                description: 'Search ID'
+      responses:
+        '200':
+          description: 'Search stopped successfully'
+        '404':
+          description: 'Search job was not found'
+  /api/v2/search/status:
+    post:
+      summary: 'Get search status'
+      operationId: Status
+      requestBody:
+        content:
+          application/json:
             schema:
               type: object
               properties:
                 id:
                   type: number
                   description: 'Search ID'
-        responses:
-          '200':
-            description: 'Search deleted successfully'
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: 'ID of the search job'
+                  status:
+                    type: string
+                    description: '	Current status of the search job (either Running or Stopped)'
+                  total:
+                    type: number
+                    description: 'otal number of results. If the status is Running this number may contineu to increase'
+  /api/v2/search/results:
+    post:
+      summary: 'Get search results'
+      operationId: Results
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  description: 'Search ID'
+                limit:
+                  type: number
+                  description: 'Maximum number of results to return'
+                offset:
+                  type: number
+                  description: 'Offset of the first result to return'
+      responses:
+        '200':
+          description: 'Search results returned successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            descrLink:
+                              type: string
+                              description: "URL of the torrent's description page."
+                            fileName:
+                              type: string
+                              description: 'Name of the file.'
+                            fileSize:
+                              type: number
+                              description: 'Size of the file in bytes.'
+                            fileUrl:
+                              type: string
+                              description: 'Torrent download link, usually either .torrent file or magnet link.'
+                            nbLeechers:
+                              type: number
+                              description: 'Number of leechers.'
+                            nbSeeders:
+                              type: number
+                              description: 'Number of seeders.'
+                            siteUrl:
+                              type: string
+                              description: 'URL of the torrent site.'
+                  status:
+                    type: string
+                    description: 'Current status of the search job (either Running or Stopped)'
+                  total:
+                    type: number
+                    description: 'Total number of results. If the status is Running this number may contineu to increase'
           '404':
             description: 'Search job was not found'
-    /api/v2/search/plugins:
-      post:
-        summary: 'Get search plugins'
-        operationId: Plugins
-        responses:
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        enabled:
-                          type: bool
-                          description: 'Indicates whether the plugin is enabled or not.'
-                        fullName:
-                          type: string
-                          description: 'Full name of the plugin.'
-                        name:
-                          type: string
-                          description: 'Short name of the plugin.'
-                        supportedCategories:
-                          type: array
-                          description: 'List of category objects supported by the plugin.'
-                        url:
-                          type: string
-                          description: 'URL of the torrent site.'
-                        version:
-                          type: string
-                          description: 'Installed version of the plugin.'
-    /api/v2/search/installPlugin:
-      post:
-        summary: 'Get search categories'
-        operationId: InstallPlugin
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  sources:
-                    type: string
-                    description: 'Url or file path of the plugin to install (e.g. "https://raw.githubusercontent.com/qbittorrent/search-plugins/master/nova3/engines/legittorrents.py"). Supports multiple sources separated by |'
-        responses:
-          '200':
-            description: 'Plugin installed successfully'
-    /api/v2/search/uninstallPlugin:
-      post:
-        summary: 'Uninstall search plugin'
-        operationId: UninstallPlugin
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  names:
-                    type: string
-                    description: 'Name of the plugin to uninstall (e.g. "legittorrents"). Supports multiple names separated by |'
-        responses:
-          '200':
-            description: 'Plugin uninstalled successfully'
-    /api/v2/search/enablePlugin:
-      post:
-        summary: 'Enable search plugin'
-        operationId: EnablePlugin
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  names:
-                    type: string
-                    description: 'Name of the plugin to enable (e.g. "legittorrents"). Supports multiple names separated by |'
-                  enable:
-                    type: bool
-                    description: 'True to enable the plugin, false to disable it'
-        responses:
-          '200':
-            description: 'Plugin enabled successfully'
-    /api/v2/search/updatePlugins:
-      post:
-        summary: 'Update search plugins'
-        operationId: UpdatePlugins
-        responses:
-          '200':
-            description: 'Plugins updated successfully'
+          '409':
+            description: '	Offset is too large, or too small (e.g. absolute value of negative number is greater than # results)'
+  /api/v2/search/delete:
+    post:
+      summary: 'Delete search'
+      operationId: SearchDelete
+      requestBody:
+        content:
+          application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+                description: 'Search ID'
+      responses:
+        '200':
+          description: 'Search deleted successfully'
+        '404':
+          description: 'Search job was not found'
+  /api/v2/search/plugins:
+    post:
+      summary: 'Get search plugins'
+      operationId: Plugins
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      enabled:
+                        type: bool
+                        description: 'Indicates whether the plugin is enabled or not.'
+                      fullName:
+                        type: string
+                        description: 'Full name of the plugin.'
+                      name:
+                        type: string
+                        description: 'Short name of the plugin.'
+                      supportedCategories:
+                        type: array
+                        description: 'List of category objects supported by the plugin.'
+                      url:
+                        type: string
+                        description: 'URL of the torrent site.'
+                      version:
+                        type: string
+                        description: 'Installed version of the plugin.'
+  /api/v2/search/installPlugin:
+    post:
+      summary: 'Get search categories'
+      operationId: InstallPlugin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sources:
+                  type: string
+                  description: 'Url or file path of the plugin to install (e.g. "https://raw.githubusercontent.com/qbittorrent/search-plugins/master/nova3/engines/legittorrents.py"). Supports multiple sources separated by |'
+      responses:
+        '200':
+          description: 'Plugin installed successfully'
+  /api/v2/search/uninstallPlugin:
+    post:
+      summary: 'Uninstall search plugin'
+      operationId: UninstallPlugin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                names:
+                  type: string
+                  description: 'Name of the plugin to uninstall (e.g. "legittorrents"). Supports multiple names separated by |'
+      responses:
+        '200':
+          description: 'Plugin uninstalled successfully'
+  /api/v2/search/enablePlugin:
+    post:
+      summary: 'Enable search plugin'
+      operationId: EnablePlugin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                names:
+                  type: string
+                  description: 'Name of the plugin to enable (e.g. "legittorrents"). Supports multiple names separated by |'
+                enable:
+                  type: bool
+                  description: 'True to enable the plugin, false to disable it'
+      responses:
+        '200':
+          description: 'Plugin enabled successfully'
+  /api/v2/search/updatePlugins:
+    post:
+      summary: 'Update search plugins'
+      operationId: UpdatePlugins
+      responses:
+        '200':
+          description: 'Plugins updated successfully'
 components:
   schemas:
     LoginDto:
@@ -2267,7 +2265,7 @@ components:
           type: boolean
           description: 'Whether this torrent is managed by Automatic Torrent Management'
         availability:
-          type: float
+          type: number
           description: 'Percentage of file pieces currently available'
         category:
           type: string
@@ -2312,7 +2310,7 @@ components:
           type: string
           description: 'Magnet URI corresponding to this torrent'
         max_ratio:
-          type: float
+          type: number
           description: 'Maximum share ratio until torrent is stopped from seeding/uploading'
         max_seeding_time:
           type: integer
@@ -2336,13 +2334,13 @@ components:
           type: integer
           description: 'Torrent priority. Returns -1 if queuing is disabled or torrent is in seed mode'
         progress:
-          type: float
+          type: number
           description: 'Torrent progress (percentage/100)'
         ratio:
-          type: float
+          type: number
           description: 'Torrent share ratio. Max ratio value: 9999.'
         ratio_limit:
-          type: float
+          type: number
           description: 'TODO (what is different from max_ratio?)'
         save_path:
           type: string
@@ -2441,7 +2439,7 @@ components:
             description: Torrent connection count limit
           share_ratio:
             type: number
-            format: float
+            format: number
             description: Torrent share ratio
           addition_date:
             type: integer
@@ -2531,7 +2529,7 @@ components:
           type: integer
           description: File size (bytes)
         progress:
-          type: float
+          type: number
           description: File progress (percentage/100)
         priority:
           type: integer
@@ -2546,7 +2544,7 @@ components:
             type: integer
           description: The first number is the starting piece index and the second number is the ending piece index (inclusive)
         availability:
-          type: float
+          type: number
           description: Percentage of file pieces currently available (percentage/100)
     AddTorrentDto:
       type: object
@@ -2588,7 +2586,7 @@ components:
           type: integer
           description: 'Set torrent download speed limit. Unit in bytes/second'
         ratioLimit:
-          type: float
+          type: number
           description: 'Set torrent share ratio limit'
           x-version: '2.8.1'
         seedingTimeLimit:
@@ -2608,41 +2606,41 @@ components:
       type: object
       properties:
         enabled:
-          type: bool
+          type: boolean
           description: 'Indicates whether the rule is enabled or not.'
         mustContain:
-          type: str
+          type: string
           description: 'The substring that the torrent name must contain.'
         mustNotContain:
-          type: str
+          type: string
           description: 'The substring that the torrent name must not contain.'
         useRegex:
-          type: bool
+          type: boolean
           description: 'Indicates whether to enable regex mode in "mustContain" and "mustNotContain".'
         episodeFilter:
-          type: str
+          type: string
           description: 'The definition of the episode filter.'
         smartFilter:
-          type: bool
+          type: boolean
           description: 'Indicates whether to enable smart episode filter.'
         previouslyMatchedEpisodes:
-          type: list
+          type: array
           description: 'The list of episode IDs already matched by smart filter.'
         affectedFeeds:
-          type: list
+          type: array
           description: 'The list of feed URLs the rule applies to.'
         ignoreDays:
           type: number
           description: 'Ignore subsequent rule matches within the specified number of days.'
         lastMatch:
-          type: str
+          type: string
           description: 'The last time the rule matched a torrent.'
         addPaused:
-          type: bool
+          type: boolean
           description: 'Indicates whether to add matched torrent in paused mode.'
         assignedCategory:
-          type: str
+          type: string
           description: 'The category to assign to the torrent.'
         savePath:
-          type: str
+          type: string
           description: 'The directory to save the torrent to.'
