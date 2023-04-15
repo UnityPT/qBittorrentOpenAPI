@@ -529,7 +529,7 @@ paths:
   /api/v2/torrents/reannounce:
     post:
       summary: 'Reannounce torrents'
-      operationId: Recheck
+      operationId: Reannounce
       requestBody:
         content:
           application/json:
