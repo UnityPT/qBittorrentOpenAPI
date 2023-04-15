@@ -173,16 +173,16 @@ paths:
       requestBody:
         content:
           application/json:
-          schema:
-            type: object
-            properties:
-            hash:
-              type: string
-              description: 'Torrent hash'
-            rid:
-              type: integer
-              description: 'Response ID. If not provided, rid=0 will be assumed. If the given rid is different from the one of last server reply, full_update will be true (see the server reply details for more info)'
-              default: 0
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'Torrent hash'
+                rid:
+                  type: integer
+                  description: 'Response ID. If not provided, rid=0 will be assumed. If the given rid is different from the one of last server reply, full_update will be true (see the server reply details for more info)'
+                  default: 0
       responses:
         '200':
           description: 'qBittorrent torrent peers'
@@ -226,9 +226,9 @@ paths:
         '200':
           description: 'qBittorrent transfer download limit'
           content:
-          text/plain:
-            schema:
-              type: integer
+            text/plain:
+              schema:
+                type: integer
   /api/v2/transfer/setDownloadLimit:
     post:
       summary: 'Set qBittorrent transfer download limit'
@@ -236,12 +236,12 @@ paths:
       requestBody:
         content:
           application/json:
-          schema:
-            type: object
-            properties:
-              limit:
-                type: integer
-                description: 'The global download speed limit to set in bytes/second'
+            schema:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                  description: 'The global download speed limit to set in bytes/second'
       responses:
         '200':
           description: 'qBittorrent transfer download limit set successfully'
@@ -253,9 +253,9 @@ paths:
         '200':
           description: 'qBittorrent transfer upload limit'
           content:
-          text/plain:
-            schema:
-              type: integer
+            text/plain:
+              schema:
+                type: integer
   /api/v2/transfer/setUploadLimit:
     post:
       summary: 'Set qBittorrent transfer upload limit'
@@ -313,12 +313,12 @@ paths:
       requestBody:
         content:
           application/json:
-          schema:
-            type: object
-            properties:
-              hash:
-                type: string
-                description: 'The hash of the torrent you want to get the generic properties of'
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: 'The hash of the torrent you want to get the generic properties of'
       responses:
         '200':
           description: 'qBittorrent torrent properties'
@@ -401,11 +401,11 @@ paths:
         '200':
           description: 'Torrent contents'
           content:
-          application/json:
-            schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/FileDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileDto'
         '404':
           description: 'Torrent not found'
   /api/v2/torrents/pieceStates:
@@ -1161,15 +1161,15 @@ paths:
       requestBody:
         content:
           application/json:
-          schema:
-            type: object
-            properties:
-            url:
-              type: string
-              description: 'URL of the RSS feed'
-            path:
-              type: string
-              description: 'Current full path of added feed (e.g. "The Pirate Bay\Top100")'
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: 'URL of the RSS feed'
+                path:
+                  type: string
+                  description: 'Current full path of added feed (e.g. "The Pirate Bay\Top100")'
       responses:
         '200':
           description: 'Feed added successfully'
@@ -1280,19 +1280,19 @@ paths:
       requestBody:
         content:
           application/json:
-          schema:
-            type: object
-            properties:
-            ruleName:
-              type: string
-              description: 'Rule name (e.g. "Punisher")'
-            ruleDef:
+            schema:
               type: object
-              description: 'JSON encoded rule definition'
-              content:
-                application/json:
-                  schema:
-                    $ref: '#/components/schemas/RssRuleDto'
+              properties:
+                ruleName:
+                  type: string
+                  description: 'Rule name (e.g. "Punisher")'
+                ruleDef:
+                  type: object
+                  description: 'JSON encoded rule definition'
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/RssRuleDto'
       responses:
         '200':
           description: 'Rule set successfully'
@@ -1327,9 +1327,9 @@ paths:
             schema:
               type: object
               properties:
-              ruleName:
-                type: string
-                description: 'Rule name (e.g. "Punisher")'
+                ruleName:
+                  type: string
+                  description: 'Rule name (e.g. "Punisher")'
       responses:
         '200':
           description: 'Rule removed successfully'
@@ -1392,8 +1392,8 @@ paths:
                 type: object
                 properties:
                   id:
-                  type: number
-                  description: 'Search ID'
+                    type: number
+                    description: 'Search ID'
         '409':
           description: 'User has reached the limit of max Running searches (currently set to 5)'
   /api/v2/search/stop:
@@ -1407,8 +1407,8 @@ paths:
               type: object
               properties:
                 id:
-                type: number
-                description: 'Search ID'
+                  type: number
+                  description: 'Search ID'
       responses:
         '200':
           description: 'Search stopped successfully'
@@ -1440,10 +1440,10 @@ paths:
                     description: 'ID of the search job'
                   status:
                     type: string
-                    description: '	Current status of the search job (either Running or Stopped)'
+                    description: 'Current status of the search job (either Running or Stopped)'
                   total:
                     type: number
-                    description: 'otal number of results. If the status is Running this number may contineu to increase'
+                    description: 'total number of results. If the status is Running this number may contineu to increase'
   /api/v2/search/results:
     post:
       summary: 'Get search results'
@@ -1516,12 +1516,12 @@ paths:
       requestBody:
         content:
           application/json:
-          schema:
-            type: object
-            properties:
-              id:
-                type: number
-                description: 'Search ID'
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  description: 'Search ID'
       responses:
         '200':
           description: 'Search deleted successfully'
